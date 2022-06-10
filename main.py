@@ -1,5 +1,4 @@
 import argparse
-import requests
 
 from UserDepartment import UserDepartment
 from UserId import UserId
@@ -12,6 +11,7 @@ parser.add_argument('--id', help="The user's task id", nargs='+')
 args = parser.parse_args()
 
 if __name__ == '__main__':
+
     try:
         user_name = UserName(args.name)
         user_id = UserId(args.id)
