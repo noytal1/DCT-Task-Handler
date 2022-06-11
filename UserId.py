@@ -2,8 +2,9 @@ from UserInput import UserInput
 import requests
 
 url = "https://dct-tasks-db.herokuapp.com/tasks"
-incorrect_inp_msg = "Incorrect input, try again: try({}/3): "
+incorrect_inp_msg = "Missing ID, try again: try({}/3): "
 incorrect_id_msg = "Task ID doesn't exist, try again: try({}/3): "
+
 
 class UserId(UserInput):
     def __init__(self, user_input):
@@ -45,14 +46,12 @@ class UserId(UserInput):
             if task["id"] == int(self._user_input[0]):
                 if task["status"] == "open":
                     self._task_details = [task["source"], task["destination"], task["description"]]
-                    print(self._task_details)
                     return True
                 print("Closed task. Program exits")
                 exit()
         return False
 
     def check_inp_type(self):
-
         if len(self._user_input) == 1 and str(self._user_input[0]).isdigit():
             return True
         return False
@@ -62,6 +61,8 @@ class UserId(UserInput):
             print("Maxed number of tries. Program exits")
             exit()
         self._input_tries += 1
+        if self._user_input is None:
+            self._user_input = ['']
         self._user_input[0] = str(input(msg.format(self._input_tries)))
 
     def __str__(self):
