@@ -1,6 +1,7 @@
 from UserDepartment import UserDepartment
 from UserId import UserId
 from UserName import UserName
+from FilesHandler import FilesHandler
 
 
 class User:
@@ -16,8 +17,9 @@ class User:
             is_id_valid, task_list = user_id.validate()
             if is_id_valid:
                 user_dept = UserDepartment(self._dept, task_list)
-                output = user_dept.validate()
+                if user_dept.validate():
+                    file_handler = FilesHandler(task_list)
+                    file_handler.handle()
             else:
                 exit()
-
 
