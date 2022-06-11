@@ -36,6 +36,7 @@ class UserDepartment(UserInput):
                         if self.is_task_desc_in_dept(department_permissions):
                             return True
                         else:
+                            print("add msg here")
                             exit()
                 return False
 

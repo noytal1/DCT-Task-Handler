@@ -17,7 +17,6 @@ class User:
             if is_id_valid:
                 user_dept = UserDepartment(self._dept, task_list)
                 output = user_dept.validate()
-                print(output)
             else:
                 exit()
 
