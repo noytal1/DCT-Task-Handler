@@ -66,6 +66,7 @@ class UserId(UserInput):
                 return True
             else:
                 self.take_new_input(incorrect_id_msg)
+
         return False
 
     def find_task_in_json(self, response):
@@ -107,11 +108,10 @@ class UserId(UserInput):
         self._input_tries += 1
         if self._user_input is None:
 
-            self._user_input = ['']
+            self._user_input = ['x']
 
         logger.info("received an invalid input")
-
-        self._user_input = str(input(msg.format(self._input_tries)))
+        self._user_input = [str(input(msg.format(self._input_tries)))]
         logger.info("new {} from user".format(self._type))
 
     def __str__(self):
