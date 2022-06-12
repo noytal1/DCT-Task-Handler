@@ -1,7 +1,6 @@
 
 import argparse
 
-
 def parse_args():
     """
     function to define all flags needed and parse them

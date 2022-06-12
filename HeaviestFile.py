@@ -1,6 +1,7 @@
 import os
 
 from FileAction import FileAction
+from Logger import logger
 
 
 class HeaviestFile(FileAction):
@@ -25,4 +26,6 @@ class HeaviestFile(FileAction):
         size = os.path.getsize(self._src + '/' + f)  # compare the given file size to the one we already found
         if int(size) > self.heaviest_size:
             self.heaviest_size = int(size)
+            logger.info("updated heaviest file to: {}".format(f))
+
             self._file_to_copy_from = f

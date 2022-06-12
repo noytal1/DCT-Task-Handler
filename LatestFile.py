@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
-
 from FileAction import FileAction
+from Logger import logger
 
 
 class LatestFile(FileAction):
@@ -30,3 +30,5 @@ class LatestFile(FileAction):
         if self.latest_date == '' or date.date() > self.latest_date:
             self.latest_date = date.date()
             self._file_to_copy_from = f
+            logger.info("updated latest file to: {}".format(f))
+

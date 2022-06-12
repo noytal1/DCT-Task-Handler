@@ -1,7 +1,5 @@
-from datetime import datetime
-import os
-
 from FileAction import FileAction
+from Logger import logger
 
 
 class NamedFile(FileAction):
@@ -26,3 +24,5 @@ class NamedFile(FileAction):
         """
         if self._substring in f:
             self._file_to_copy_from = f
+            logger.info("updated 'named with' file to: {}".format(f))
+

@@ -1,5 +1,6 @@
 import os
 import shutil
+from Logger import logger
 
 
 class FileAction:
@@ -26,7 +27,11 @@ class FileAction:
         for f in os.listdir(self._src):
             file_name, file_extension = os.path.splitext(f)
             if file_extension == self._file_type:
+                logger.info("found matching file extension {}".format(file_extension))
+
                 self.find_file(f)
+        logger.info("copying from file {}".format(self._file_to_copy_from))
+
         self.copy_file()  # copies the file matching the description
 
     def create_dest_folder(self):
@@ -55,22 +60,31 @@ class FileAction:
         :return:
         """
         try:
+            logger.info("creating destination folder {}".format(self._src))
+
             self.create_dest_folder()
+            logger.info("copying file {} from {} to {}".format(self._file_to_copy_from, self._src, self._destination))
+
             shutil.copyfile(self._src + '/' + self._file_to_copy_from,
                             self._destination + '/' + self._file_to_copy_from)
-            # shutil.copyfile("source/dcm_static_and_templates/javascript.js", "destination/pm_internal/javascript.js")
+            # e.g: shutil.copyfile("source/dcm_static_and_templates/javascript.js",
+            # "destination/pm_internal/javascript.js")
 
         except shutil.SameFileError:
             print("Source and destination represents the same file")
+            logger.info("Source and destination represents the same file")
 
         # If destination is a directory.
         except IsADirectoryError:
             print("Destination is a directory.")
+            logger.info("Destination is a directory.")
 
         # If there is any permission issue
         except PermissionError:
             print("Permission denied.")
+            logger.info("Permission denied.")
 
         # For other errors
         except Exception as e:
             print("Error occurred while copying file.")
+            logger.info("Permission denied.")

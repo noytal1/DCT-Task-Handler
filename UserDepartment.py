@@ -1,6 +1,7 @@
 from UserInput import UserInput
 import json
 import re
+from Logger import logger
 
 
 def is_substring(str1, str2):
@@ -52,14 +53,17 @@ class UserDepartment(UserInput):
                     if dept.upper() == self._user_input:
                         department_permissions = data[dept]
                         if self.is_task_desc_in_dept(department_permissions):
+                            logger.info("department {} can execute the task".format(self._user_input))
                             return True
                         else:
                             print("This user's department is not allowed to execute this task. Program exits")
+                            logger.info("This user's department is not allowed to execute this task. Program exits")
                             exit()
                 return False
 
         except Exception as e:
             print(f"{e} occurred")
+            logger.info(f"{e} occurred")
             return False
 
     def is_task_desc_in_dept(self, department_permissions):

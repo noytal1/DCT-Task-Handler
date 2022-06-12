@@ -1,3 +1,6 @@
+from Logger import logger
+
+
 class UserInput:
     """ A class to manage validating a User input
 
@@ -5,6 +8,7 @@ class UserInput:
               argument1 (list): user input
 
          """
+
     def __init__(self, user_input):
         self._user_input = '' if user_input is None else user_input
         self._is_valid = False  # is the given input valid
@@ -21,9 +25,13 @@ class UserInput:
                 self._input_tries += 1  # updating number of tries
                 new_input = str(
                     input("Incorrect {} input, try again: try({}/3): ".format(self._type, self._input_tries))).split()
+                logger.info("received an invalid input: {}, try({}/3)".format(self._user_input, self._input_tries))
                 self._user_input = new_input  # trying a new given input
+                logger.info("new {} from user: {}".format(self._type, new_input))
+
             else:
                 self._is_valid = True
+        logger.info("valid {}: {}".format(self._type, self._user_input))
         return self._is_valid
 
     def check_inp_type(self):
