@@ -1,16 +1,21 @@
-import argparse
-
 from User import User
+import ArgsHandler
+import logging
+from datetime import datetime
 
-parser = argparse.ArgumentParser(description="Execute a user's task")
-parser.add_argument('--name', help="The user's name", nargs='+')
-parser.add_argument('--dept', help="The user's department", nargs='+')
-parser.add_argument('--id', help="The user's task id", nargs='+')
-args = parser.parse_args()
+now = datetime.now()
+dt_string = now.strftime("%d-%m-%Y, %H-%M-%S")
+print("date and time =", dt_string)
+
+logging.basicConfig(level=logging.INFO, filename='destination/logs/{}.log'.format(dt_string), filemode='w',
+                    format='%(asctime)s :: %(levelname)s :: %(message)s')
 
 if __name__ == '__main__':
+    """ Main function to execute a DCT task """
     try:
-        user = User(args.name, args.id, args.dept)
+        logging.info("creating a user")
+        args = ArgsHandler.parse_args()  # define all flags needed
+        user = User(args.name, args.id, args.dept)  # create a user to execute a task
         user.create_user()
     except Exception as e:
         print(e)

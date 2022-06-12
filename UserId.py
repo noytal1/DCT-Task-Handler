@@ -7,12 +7,23 @@ incorrect_id_msg = "Task ID doesn't exist, try again: try({}/3): "
 
 
 class UserId(UserInput):
+    """ A class to manage validating a User task id input
+
+      Parameters:
+      argument1 (list): user input
+
+    """
+
     def __init__(self, user_input):
         super().__init__(user_input)
         self._type = 'ID'
-        self._task_details = []
+        self._task_details = []  # saves relevant data to execute task
 
     def validate(self):
+        """
+        function to validate the user input
+        :return: if the input is indeed valid
+        """
         is_first_success = self.first_step()
         if is_first_success:
             self._input_tries = 0
@@ -24,6 +35,10 @@ class UserId(UserInput):
             exit()
 
     def first_step(self):
+        """
+        function to do the type of input validation
+        :return:
+        """
         while self._input_tries < 3:
             is_id_valid = self.check_inp_type()
             if is_id_valid:
@@ -33,6 +48,10 @@ class UserId(UserInput):
         return False
 
     def second_step(self):
+        """
+        function to hold all the input validations
+        :return:
+        """
         response = requests.get(url)
         while self._input_tries <= 3:
             if self.check_inp_type() and self.find_task_in_json(response):
@@ -42,6 +61,10 @@ class UserId(UserInput):
         return False
 
     def find_task_in_json(self, response):
+        """
+        function to do the fetching and verifying whether the task id exits in REST API
+        :return:
+        """
         for task in response.json():
             if task["id"] == int(self._user_input[0]):
                 if task["status"] == "open":
@@ -52,11 +75,19 @@ class UserId(UserInput):
         return False
 
     def check_inp_type(self):
+        """
+        function to check the specific characteristics of an input according to its flag
+        :return: if input is valid
+        """
         if len(self._user_input) == 1 and str(self._user_input[0]).isdigit():
             return True
         return False
 
     def take_new_input(self, msg):
+        """
+        function to take a new input from user in case of an invalid one
+        :return: if input is valid
+        """
         if self._input_tries == 3:
             print("Maxed number of tries. Program exits")
             exit()
